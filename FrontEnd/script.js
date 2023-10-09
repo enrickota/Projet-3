@@ -21,5 +21,4 @@ function projet(projets) {
         figure.appendChild(nomElement);
     }
 }
-
 filtres();

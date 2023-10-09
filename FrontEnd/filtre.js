@@ -1,90 +1,33 @@
 function filtres() {
     (async function () {
-        const reponse = await fetch("http://localhost:5678/api/works");
-        const projets = await reponse.json();
+        const reponseProjet = await fetch("http://localhost:5678/api/works");
+        const projets = await reponseProjet.json();
+        const reponseCategorie = await fetch("http://localhost:5678/api/categories");
+        const categories = await reponseCategorie.json();
 
         const divFiltres = document.querySelector(".liste-filtres");
-        const btnTous = document.createElement("button");
-        divFiltres.appendChild(btnTous);
-        btnTous.innerText = "Tous";
-        btnTous.addEventListener("click", () => {
-            projet(projets);
-            const listeBtn = document.querySelectorAll("button");
-            for (i = 0; i < listeBtn.length; i++) {
-                listeBtn[i].style.backgroundColor = "white";
-                listeBtn[i].style.color = "#1D6154";
-                btnTous.style.backgroundColor = "#1D6154";
-                btnTous.style.color = "white";
-            }
-        });
-    })();
-
-    (async function () {
-        const reponse = await fetch("http://localhost:5678/api/works");
-        const projets = await reponse.json();
-
-        const divFiltres = document.querySelector(".liste-filtres");
-        const btnObjet = document.createElement("button");
-        divFiltres.appendChild(btnObjet);
-        btnObjet.innerText = "Objets";
-        btnObjet.addEventListener("click", () => {
-            const objetFiltrer = projets.filter(function (h) {
-                return h.categoryId === 1;
+        const filtreComplet = [{ name: "Tous", id: 0 }, ...categories];
+        for (let i = 0; i < filtreComplet.length; i++) {
+            const categorie = filtreComplet[i];
+            const btn = document.createElement("button");
+            btn.innerText = categorie.name;
+            divFiltres.appendChild(btn);
+            btn.addEventListener("click", () => {
+                const listeBtn = document.querySelectorAll(".liste-filtres button");
+                for (let index = 0; index < listeBtn.length; index++) {
+                    listeBtn[index].style.backgroundColor = "white";
+                    listeBtn[index].style.color = "#1D6154";
+                }
+                btn.style.backgroundColor = "#1D6154";
+                btn.style.color = "white";
+                const filtreProjet = projets.filter((h) => {
+                    return h.categoryId === categorie.id;
+                });
+                if (categorie.id === 0) {
+                    return projet(projets);
+                }
+                projet(filtreProjet);
             });
-            projet(objetFiltrer);
-            const listeBtn = document.querySelectorAll("button");
-            for (i = 0; i < listeBtn.length; i++) {
-                listeBtn[i].style.backgroundColor = "white";
-                listeBtn[i].style.color = "#1D6154";
-                btnObjet.style.backgroundColor = "#1D6154";
-                btnObjet.style.color = "white";
-            }
-        });
-    })();
-
-    (async function () {
-        const reponse = await fetch("http://localhost:5678/api/works");
-        const projets = await reponse.json();
-
-        const divFiltres = document.querySelector(".liste-filtres");
-        const btnAppartement = document.createElement("button");
-        divFiltres.appendChild(btnAppartement);
-        btnAppartement.innerText = "Appartements";
-        btnAppartement.addEventListener("click", () => {
-            const appartementFiltrer = projets.filter(function (h) {
-                return h.categoryId === 2;
-            });
-            projet(appartementFiltrer);
-            const listeBtn = document.querySelectorAll("button");
-            for (i = 0; i < listeBtn.length; i++) {
-                listeBtn[i].style.backgroundColor = "white";
-                listeBtn[i].style.color = "#1D6154";
-                btnAppartement.style.backgroundColor = "#1D6154";
-                btnAppartement.style.color = "white";
-            }
-        });
-    })();
-
-    (async function () {
-        const reponse = await fetch("http://localhost:5678/api/works");
-        const projets = await reponse.json();
-
-        const divFiltres = document.querySelector(".liste-filtres");
-        const btnHotel = document.createElement("button");
-        divFiltres.appendChild(btnHotel);
-        btnHotel.innerText = "Hotels & restaurants";
-        btnHotel.addEventListener("click", () => {
-            const hotelFiltrer = projets.filter(function (h) {
-                return h.categoryId === 3;
-            });
-            projet(hotelFiltrer);
-            const listeBtn = document.querySelectorAll("button");
-            for (i = 0; i < listeBtn.length; i++) {
-                listeBtn[i].style.backgroundColor = "white";
-                listeBtn[i].style.color = "#1D6154";
-                btnHotel.style.backgroundColor = "#1D6154";
-                btnHotel.style.color = "white";
-            }
-        });
+        }
     })();
 }

@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #FFFEF8;
 }
 ol, ul {
 	list-style: none;
@@ -45,6 +46,11 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+
+a {
+	text-decoration: none;
+	color: black;
 }
 /** end reset css**/
 body {
@@ -95,8 +101,9 @@ nav li {
 	font-size: 1.2em;
 }
 
-li:hover {
+a:hover {
 	color: #B1663C;
+	cursor: pointer;
 }
 #introduction {
 	display: flex;
@@ -203,4 +210,28 @@ footer nav ul {
 	font-family: syne;
 	padding: 9px 20px;
 	cursor: pointer;
+}
+
+.mot-de-passe-oublie {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.btn-connecter {
+	cursor: pointer;
+}
+
+.footer-login {
+	position: fixed;
+  	bottom: 0; 
+  	left: 0;
+  	width: 100%;
+}
+
+.header-login {
+	margin-bottom: 150px;
+}
+
+.btn-login {
+	font-weight: 600;
 }
