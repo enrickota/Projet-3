@@ -54,18 +54,17 @@ a {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
-	margin:auto;
+	
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px; 
 }
 section {
-	margin: 50px 0
+	margin: 50px; 
 }
 
 h1{
@@ -105,9 +104,16 @@ a:hover {
 	color: #B1663C;
 	cursor: pointer;
 }
+
+.contenue-menu {
+	max-width: 1140px;
+	margin:auto;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
+	margin-bottom: 150px;
 }
 #introduction figure {
 	flex: 1
@@ -130,7 +136,7 @@ a:hover {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	margin-bottom: 2em;
 }
 .gallery {
 	width: 100%;
@@ -196,7 +202,7 @@ footer nav ul {
 .liste-filtres {
 	display: flex;
 	justify-content: center;
-	margin-bottom: 40px;
+	margin-bottom: 50px;
 	gap: 10px;
 }
 
@@ -234,4 +240,21 @@ footer nav ul {
 
 .btn-login {
 	font-weight: 600;
+}
+
+.message-erreur {
+	background-color: rgba(255, 0, 0, 0.2);
+	color: red;
+	font-size: 16px;
+	text-align: center;
+	padding: 20px;
+	display: none;
+}
+
+.barre-noir {
+	display: none;
+	background-color: black;
+	height: 59px;
+	width: 100%;
+	color: white;
 }

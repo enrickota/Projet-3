@@ -3,15 +3,24 @@ const formulaireConnexion = document.querySelector(".formulaire-connexion");
 formulaireConnexion.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const avis = {
-        email: event.target.querySelector("[name=email").value,
-        motDePasse: event.target.querySelector("[name=mot-de-passe").value,
-    };
-
-    const chargeUtile = JSON.stringify(avis);
-    fetch("https://localhost:5678/api/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: chargeUtile,
-    });
+    const email = document.querySelector("#email").value;
+    const passWord = document.querySelector("#password").value;
+    if (email === "sophie.bluel@test.tld" && passWord === "S0phie") {
+        fetch("http://localhost:5678/api/users/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                email: email,
+                password: passWord,
+            }),
+        })
+            .then((reponse) => reponse.json())
+            .then((data) => {
+                window.sessionStorage.setItem("user", data.token);
+                window.location.href = "./index.html";
+            });
+    } else {
+        const messageErreur = document.querySelector(".message-erreur");
+        messageErreur.style.display = "initial";
+    }
 });
