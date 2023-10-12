@@ -34,4 +34,10 @@ if (window.sessionStorage.getItem("user")) {
     barreNoir.style.justifyContent = "center";
     barreNoir.style.alignItems = "center";
     barreNoir.style.gap = "10px";
+    const lienLogin = document.querySelector(".lien-login");
+    lienLogin.innerText = "logout";
+    const btnModifier = document.querySelector(".btn-modifier");
+    btnModifier.style.display = "initial";
+    const divProjetLogin = document.querySelector(".div-projet-login");
+    divProjetLogin.style.marginLeft = "100px";
 }

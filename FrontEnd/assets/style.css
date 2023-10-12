@@ -258,3 +258,15 @@ footer nav ul {
 	width: 100%;
 	color: white;
 }
+
+.div-projet-login {
+	display: flex;
+	justify-content: center;
+}
+
+.btn-modifier {
+	margin-top: 10px;
+	margin-left: 30px;
+	display: none; 
+}
+
