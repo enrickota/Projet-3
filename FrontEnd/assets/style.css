@@ -218,6 +218,7 @@ footer nav ul {
 	cursor: pointer;
 }
 
+/******PAGE LOGIN******/
 .mot-de-passe-oublie {
 	text-decoration: underline;
 	cursor: pointer;
@@ -251,6 +252,7 @@ footer nav ul {
 	display: none;
 }
 
+/******PAGE INDEX CONNECTER*******/
 .barre-noir {
 	display: none;
 	background-color: black;
@@ -268,5 +270,84 @@ footer nav ul {
 	margin-top: 10px;
 	margin-left: 30px;
 	display: none; 
+}
+
+/*******MODAL*******/
+.modal {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.8);
+}
+
+.modal-wrapper {
+	position: relative;
+	background-color: white;
+	width: 630px;
+	height: 680px;
+	padding: 30px;
+	max-width: calc(100vw - 20px);
+	max-height: calc(100vh - 20px);
+	overflow: auto;
+	border-radius: 10px;
+}
+
+.galerie-image {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	width: 70%;
+	margin: auto;
+}
+
+.galerie-image img {
+	height: 104px;
+	margin-bottom: 30px;
+	cursor: pointer;
+}
+
+.modal-header {
+	display: flex;
+	justify-content: end;
+}
+
+.btn-fermer {
+	border: none;
+	background-color: white;
+	cursor: pointer;
+}
+
+.modal h2 {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+	margin-bottom: 60px;
+	color: black;
+	font-weight: 400;
+	font-size: 26px;
+}
+
+.hr {
+	width:67%;
+	margin-top: 60px;
+	margin-bottom: 40px;
+}
+.btn-ajouter {
+	background-color: #1D6154;
+	color: white;
+	border-radius: 60px;
+	width: 37%;
+	height: 36px;
+	cursor: pointer;
+}
+
+.modal-footer {
+	display: flex;
+	justify-content: center;
+	margin-top: 30px;
 }
 
