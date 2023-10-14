@@ -23,6 +23,7 @@ function projet(projets) {
 }
 filtres();
 indexConnecter();
+modal();
 
 (async function () {
     const reponseProjet = await fetch("http://localhost:5678/api/works");
@@ -30,8 +31,13 @@ indexConnecter();
     const galleriImageModal = document.querySelector(".galerie-image");
     for (let i = 0; i < projets.length; i++) {
         const imageProjet = projets[i].imageUrl;
+        const div = document.createElement("div");
         const divImageprojet = document.createElement("img");
+        const iconePoubelle = document.createElement("i");
+        iconePoubelle.classList.add("fa-solid", "fa-trash-can");
         divImageprojet.src = imageProjet;
-        galleriImageModal.appendChild(divImageprojet);
+        div.appendChild(divImageprojet);
+        div.appendChild(iconePoubelle);
+        galleriImageModal.appendChild(div);
     }
 })();
