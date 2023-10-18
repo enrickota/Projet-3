@@ -1,3 +1,4 @@
+/***********INTRODUCTION DE MES IMAGES DYNAMIQUEMENT**********/
 (async function () {
     const reponse = await fetch("http://localhost:5678/api/works");
     const projets = await reponse.json();
@@ -21,10 +22,8 @@ function projet(projets) {
         figure.appendChild(nomElement);
     }
 }
-filtres();
-indexConnecter();
-modal();
 
+/*********INTRODUCTION DES IMAGES SUR LA MODAL**********/
 (async function () {
     const reponseProjet = await fetch("http://localhost:5678/api/works");
     const projets = await reponseProjet.json();
@@ -35,9 +34,15 @@ modal();
         const divImageprojet = document.createElement("img");
         const iconePoubelle = document.createElement("i");
         iconePoubelle.classList.add("fa-solid", "fa-trash-can");
+
         divImageprojet.src = imageProjet;
         div.appendChild(divImageprojet);
         div.appendChild(iconePoubelle);
         galleriImageModal.appendChild(div);
     }
 })();
+
+filtres();
+indexConnecter();
+modal();
+modal2();
