@@ -33,8 +33,26 @@ function projet(projets) {
         const div = document.createElement("div");
         const divImageprojet = document.createElement("img");
         const iconePoubelle = document.createElement("i");
+        iconePoubelle.addEventListener("click", async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const iconeElement = projets[i].id;
+            let monToken = localStorage.getItem("user");
+            console.log(iconeElement);
+            let response = await fetch(`http://localhost:5678/api/works/${iconeElement}`, {
+                method: "DELETE",
+                headers: {
+                    accept: "*/*",
+                    Authorization: `Bearer ${monToken}`,
+                },
+            });
+            if (response.ok) {
+                return false;
+            } else {
+                alert("Echec de suppression");
+            }
+        });
         iconePoubelle.classList.add("fa-solid", "fa-trash-can");
-
         divImageprojet.src = imageProjet;
         div.appendChild(divImageprojet);
         div.appendChild(iconePoubelle);
