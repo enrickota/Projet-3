@@ -76,22 +76,21 @@
                             <button class="btn-fermer"><i class="fa-solid fa-xmark fa-xl"></i></button>
                         </div>
                         <h2 id="titreModal">Ajout photo</h2>
-                        <div class="conteneur-choix-photo">
-                            <i class="fa-regular fa-image"></i>
-                            <label for="filInput">+ Ajouter photo</label>
-                            <input type="file" id="filInput" />
-                            <p>jpg.png : 4mo max</p>
-                        </div>
-                        <form>
+                        <form id="form-ajout-projet" method="post" action="#">
+                            <div class="conteneur-choix-photo">
+                                <img id="conteneur-photo" />
+                                <i class="fa-regular fa-image"></i>
+                                <label for="filInput">+ Ajouter photo</label>
+                                <input type="file" id="filInput" name="file" accept="image/*" onchange="afficherImage()" />
+                                <p>jpg.png : 4mo max</p>
+                            </div>
                             <label for="titre">Titre</label>
                             <input type="text" name="titre" id="titre" />
                             <label for="categorie">Catégorie</label>
                             <select name="categorie" id="categorie"></select>
+                            <hr class="hr" />
+                            <button type="submit" class="btn-valider">Valider</button>
                         </form>
-                        <hr class="hr" />
-                        <div class="modal-footer">
-                            <button class="btn-valider">Valider</button>
-                        </div>
                     </div>
                 </aside>
                 <section id="contact">

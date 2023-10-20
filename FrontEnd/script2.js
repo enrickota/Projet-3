@@ -110,4 +110,39 @@ function modal2() {
     document.querySelectorAll(".btn-ajouter").forEach((a) => {
         a.addEventListener("click", ouvrirModal);
     });
+
+    (async function () {
+        const reponseCategorie = await fetch("http://localhost:5678/api/categories");
+        const categories = await reponseCategorie.json();
+        const selectCategorie = document.querySelector("#categorie");
+        for (let i = 0; i < categories.length; i++) {
+            const option = document.createElement("option");
+            option.innerText = categories[i].name;
+            selectCategorie.appendChild(option);
+        }
+    })();
+}
+
+/**********AFFICHAGE DE LA PHOTO SUR LA MODAL APRES CHOIX**********/
+function afficherImage() {
+    let file = document.querySelector("#filInput").files;
+    let conteneurPhoto = document.querySelector("#conteneur-photo");
+    if (file.length > 0) {
+        let fileReader = new FileReader();
+        fileReader.onload = function (event) {
+            const icone = document.querySelector(".conteneur-choix-photo i");
+            icone.style.display = "none";
+            const label = document.querySelector(".conteneur-choix-photo label");
+            label.style.display = "none";
+            const p = document.querySelector(".conteneur-choix-photo p");
+            p.style.display = "none";
+            const conteneur = document.querySelector(".conteneur-choix-photo");
+            conteneur.style.padding = "0px";
+            conteneur.style.display = "flex";
+            conteneur.style.justifyContent = "center";
+            conteneurPhoto.setAttribute("src", event.target.result);
+            conteneurPhoto.classList.add("ajustement-photo");
+        };
+        fileReader.readAsDataURL(file[0]);
+    }
 }

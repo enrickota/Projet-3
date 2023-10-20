@@ -12,6 +12,7 @@ function projet(projets) {
         const article = projets[i];
         const div = document.querySelector(".gallery");
         const figure = document.createElement("figure");
+        figure.id = article.id;
         const imageElement = document.createElement("img");
         imageElement.src = article.imageUrl;
         const nomElement = document.createElement("figcaption");
@@ -32,13 +33,13 @@ function projet(projets) {
         const imageProjet = projets[i].imageUrl;
         const div = document.createElement("div");
         const divImageprojet = document.createElement("img");
+        const figure = document.querySelectorAll(".gallery figure");
         const iconePoubelle = document.createElement("i");
         iconePoubelle.addEventListener("click", async (e) => {
             e.preventDefault();
             e.stopPropagation();
             const iconeElement = projets[i].id;
-            let monToken = localStorage.getItem("user");
-            console.log(iconeElement);
+            let monToken = sessionStorage.getItem("user");
             let response = await fetch(`http://localhost:5678/api/works/${iconeElement}`, {
                 method: "DELETE",
                 headers: {
@@ -46,11 +47,7 @@ function projet(projets) {
                     Authorization: `Bearer ${monToken}`,
                 },
             });
-            if (response.ok) {
-                return false;
-            } else {
-                alert("Echec de suppression");
-            }
+            figure.remove();
         });
         iconePoubelle.classList.add("fa-solid", "fa-trash-can");
         divImageprojet.src = imageProjet;

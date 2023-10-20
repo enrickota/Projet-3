@@ -377,10 +377,6 @@ footer nav ul {
 
 .conteneur-choix-photo {
 	background-color: #E8F1F6;
-	display: flex;
-	flex-direction: column;
-	width: 65%;
-	margin: auto;
 	padding: 25px;
 }
 
@@ -395,6 +391,19 @@ footer nav ul {
 .conteneur-choix-photo p {
 	display: flex;
 	justify-content: center;
+	margin-top: 10px;
+}
+
+.conteneur-choix-photo label {
+	display: flex;
+	justify-content: center;
+	background-color: #CBD6DC;
+	border-radius: 50px;
+	width: 50%;
+	margin: auto;
+	padding: 10px;
+	margin-bottom: 10px;
+	cursor: pointer;
 }
 
 #modal2 form {
@@ -418,8 +427,12 @@ footer nav ul {
 	margin: 2em 0 1em 0;
 }
 
+#modal2 form .conteneur-choix-photo label {
+	margin: auto;
+}
+
 #modal2 hr {
-	width: 73%;
+	width: 100%;
 }
 
 .btn-valider {
@@ -427,9 +440,11 @@ footer nav ul {
 	border: none;
 	color: white;
 	border-radius: 60px;
-	width: 37%;
+	width: 51%;
 	height: 36px;
 	cursor: pointer;
+	margin: auto;
+	
 }
 
 .btn-retour {
@@ -442,14 +457,6 @@ input[type=file] {
 	display: none;
 }
 
-.conteneur-choix-photo label {
-	display: flex;
-	justify-content: center;
-	background-color: #CBD6DC;
-	border-radius: 50px;
-	width: 50%;
-	margin: auto;
-	padding: 10px;
-	margin-bottom: 10px;
-	cursor: pointer;
+.ajustement-photo {
+	height: 200px;
 }
