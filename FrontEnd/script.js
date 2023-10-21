@@ -1,8 +1,11 @@
 (async function () {
     const reponse = await fetch("http://localhost:5678/api/works");
     const projets = await reponse.json();
+    const reponseCategorie = await fetch("http://localhost:5678/api/categories");
+    const categories = await reponseCategorie.json();
 
     afficherImageGallerie(projets);
+    filtres(categories, projets);
     suppressionsTravaux(projets);
 })();
 
@@ -26,38 +29,31 @@ function afficherImageGallerie(projets) {
 }
 
 /************FILTRES**********/
-function filtres() {
-    (async function () {
-        const reponseProjet = await fetch("http://localhost:5678/api/works");
-        const projets = await reponseProjet.json();
-        const reponseCategorie = await fetch("http://localhost:5678/api/categories");
-        const categories = await reponseCategorie.json();
-
-        const divFiltres = document.querySelector(".liste-filtres");
-        const filtreComplet = [{ name: "Tous", id: 0 }, ...categories];
-        for (let i = 0; i < filtreComplet.length; i++) {
-            const categorie = filtreComplet[i];
-            const btn = document.createElement("button");
-            btn.innerText = categorie.name;
-            divFiltres.appendChild(btn);
-            btn.addEventListener("click", () => {
-                const listeBtn = document.querySelectorAll(".liste-filtres button");
-                for (let index = 0; index < listeBtn.length; index++) {
-                    listeBtn[index].style.backgroundColor = "white";
-                    listeBtn[index].style.color = "#1D6154";
-                }
-                btn.style.backgroundColor = "#1D6154";
-                btn.style.color = "white";
-                const filtreProjet = projets.filter((h) => {
-                    return h.categoryId === categorie.id;
-                });
-                if (categorie.id === 0) {
-                    return afficherImageGallerie(projets);
-                }
-                afficherImageGallerie(filtreProjet);
+function filtres(categories, projets) {
+    const divFiltres = document.querySelector(".liste-filtres");
+    const filtreComplet = [{ name: "Tous", id: 0 }, ...categories];
+    for (let i = 0; i < filtreComplet.length; i++) {
+        const categorie = filtreComplet[i];
+        const btn = document.createElement("button");
+        btn.innerText = categorie.name;
+        divFiltres.appendChild(btn);
+        btn.addEventListener("click", () => {
+            const listeBtn = document.querySelectorAll(".liste-filtres button");
+            for (let index = 0; index < listeBtn.length; index++) {
+                listeBtn[index].style.backgroundColor = "white";
+                listeBtn[index].style.color = "#1D6154";
+            }
+            btn.style.backgroundColor = "#1D6154";
+            btn.style.color = "white";
+            const filtreProjet = projets.filter((h) => {
+                return h.categoryId === categorie.id;
             });
-        }
-    })();
+            if (categorie.id === 0) {
+                return afficherImageGallerie(projets);
+            }
+            afficherImageGallerie(filtreProjet);
+        });
+    }
 }
 
 //******PAGE INDEX UNE FOIS CONNECTER********/
@@ -254,7 +250,6 @@ function afficherImageModal2() {
     }
 }
 
-filtres();
 indexConnecter();
 modal1();
 modal2();
