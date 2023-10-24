@@ -175,6 +175,7 @@ function modal2() {
         const selectCategorie = document.querySelector("#categorie");
         for (let i = 0; i < categories.length; i++) {
             const option = document.createElement("option");
+            option.setAttribute("value", categories[i].id);
             option.innerText = categories[i].name;
             selectCategorie.appendChild(option);
         }
@@ -217,7 +218,8 @@ function suppressionsTravaux(projets) {
                     accept: "*/*",
                     Authorization: `Bearer ${monToken}`,
                 },
-            });
+            }).then;
+
             const reponse = await fetch("http://localhost:5678/api/works");
             const projets = await reponse.json();
             afficherImageGallerie(projets);
@@ -250,6 +252,27 @@ function afficherImageModal2() {
     }
 }
 
+function ajouterProjet() {
+    const form = document.querySelector("#form-ajout-projet");
+    const image = document.querySelector("#filInput");
+    const titre = document.querySelector("#titre");
+    const categorie = document.querySelector("#categorie");
+    const formData = new FormData();
+    formData.append("image", image.files[0]);
+    formData.append("title", titre.value);
+    formData.append("category", categorie.value);
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let monToken = sessionStorage.getItem("user");
+        fetch("http://localhost:5678/api/works", {
+            method: "POST",
+            headers: { Authorization: `Bearer ${monToken}` },
+            body: formData,
+        }).then((response) => {});
+    });
+}
+
 indexConnecter();
 modal1();
 modal2();
+ajouterProjet();

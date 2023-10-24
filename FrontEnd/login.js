@@ -5,7 +5,7 @@ formulaireConnexion.addEventListener("submit", (event) => {
 
     const email = document.querySelector("#email").value;
     const passWord = document.querySelector("#password").value;
-    if (email === "sophie.bluel@test.tld" && passWord === "S0phie") {
+    if (email !== "" && passWord !== "") {
         fetch("http://localhost:5678/api/users/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -16,8 +16,14 @@ formulaireConnexion.addEventListener("submit", (event) => {
         })
             .then((reponse) => reponse.json())
             .then((data) => {
-                window.sessionStorage.setItem("user", data.token);
-                window.location.href = "./index.html";
+                if (data.token !== undefined) {
+                    window.sessionStorage.setItem("user", data.token);
+                    window.location.href = "./index.html";
+                } else if (data.message !== undefined) {
+                    const messageErreur = document.querySelector(".message-erreur");
+                    messageErreur.style.display = "initial";
+                    messageErreur.innerHTML = data.message;
+                }
             });
     } else {
         const messageErreur = document.querySelector(".message-erreur");
