@@ -136,16 +136,16 @@ function modal2() {
         e.preventDefault();
         const modal1 = document.querySelector("#modal1");
         modal1.style.display = "none";
-        modal.style.display = "none";
         modal1.setAttribute("aria-hidden", "true");
-        modal.setAttribute("aria-hidden", "true");
         modal1.removeAttribute("aria-modal");
-        modal.removeAttribute("aria-modal");
         modal1.removeEventListener("click", fermerModal);
-        modal.removeEventListener("click", fermerModal);
         modal1.querySelector(".btn-fermer").removeEventListener("click", fermerModal);
-        modal.querySelector(".btn-fermer").removeEventListener("click", fermerModal);
         modal1.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
+        modal.style.display = "none";
+        modal.setAttribute("aria-hidden", "true");
+        modal.removeAttribute("aria-modal");
+        modal.removeEventListener("click", fermerModal);
+        modal.querySelector(".btn-fermer").removeEventListener("click", fermerModal);
         modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
         modal = null;
     };
@@ -179,6 +179,7 @@ function modal2() {
             option.innerText = categories[i].name;
             selectCategorie.appendChild(option);
         }
+        ("");
     })();
 }
 
@@ -212,13 +213,13 @@ function suppressionsTravaux(projets) {
             e.stopPropagation();
             const iconeElement = icone[i].id;
             let monToken = sessionStorage.getItem("user");
-            let response = await fetch(`http://localhost:5678/api/works/${iconeElement}`, {
+            fetch(`http://localhost:5678/api/works/${iconeElement}`, {
                 method: "DELETE",
                 headers: {
                     accept: "*/*",
                     Authorization: `Bearer ${monToken}`,
                 },
-            }).then;
+            });
 
             const reponse = await fetch("http://localhost:5678/api/works");
             const projets = await reponse.json();
@@ -257,18 +258,29 @@ function ajouterProjet() {
     const image = document.querySelector("#filInput");
     const titre = document.querySelector("#titre");
     const categorie = document.querySelector("#categorie");
-    const formData = new FormData();
-    formData.append("image", image.files[0]);
-    formData.append("title", titre.value);
-    formData.append("category", categorie.value);
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        let monToken = sessionStorage.getItem("user");
-        fetch("http://localhost:5678/api/works", {
-            method: "POST",
-            headers: { Authorization: `Bearer ${monToken}` },
-            body: formData,
-        }).then((response) => {});
+        if (image.value === "" && titre.value === "") {
+            const messageErreur = document.querySelector(".message-erreur-modal2");
+            const hr = document.querySelector("#modal2 hr");
+            messageErreur.style.display = "initial";
+            hr.style.marginTop = "0px";
+        } else {
+            const formData = new FormData();
+            formData.append("image", image.files[0]);
+            formData.append("title", titre.value);
+            formData.append("category", categorie.value);
+            let monToken = sessionStorage.getItem("user");
+            const r = await fetch("http://localhost:5678/api/works", {
+                method: "POST",
+                headers: { Authorization: `Bearer ${monToken}` },
+                body: formData,
+            });
+            const reponse = await fetch("http://localhost:5678/api/works");
+            const projets = await reponse.json();
+            afficherImageGallerie(projets);
+            suppressionsTravaux(projets);
+        }
     });
 }
 

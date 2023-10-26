@@ -433,6 +433,7 @@ footer nav ul {
 
 #modal2 hr {
 	width: 100%;
+	margin-top: 55px;
 }
 
 .btn-valider {
@@ -459,4 +460,12 @@ input[type=file] {
 
 .ajustement-photo {
 	height: 200px;
+}
+
+.message-erreur-modal2 {
+	background-color: rgba(255, 0, 0, 0.2);
+	color: red;
+	font-size: 16px;
+	text-align: center;
+	padding: 20px;
 }
