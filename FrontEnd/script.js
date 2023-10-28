@@ -9,7 +9,10 @@
     suppressionsTravaux(projets);
 })();
 
-/**********AFFICHAGE DES IMAGES DANS LA PAGE INDEX**********/
+/**
+ * AFFICHAGE DES IMAGES DANS LA PAGE INDEX
+ * @param {{id: number, title: string, imageUrl: string, categoryId: number, userId: number, category:{id: number, name: string}}} projets
+ */
 function afficherImageGallerie(projets) {
     document.querySelector(".gallery").innerHTML = "";
     for (let i = 0; i < projets.length; i++) {
@@ -28,7 +31,11 @@ function afficherImageGallerie(projets) {
     }
 }
 
-/************FILTRES**********/
+/**
+ * FILTRES
+ * @param {{id: number, name: string}} categories
+ * @param {{id: number, title: string, imageUrl: string, categoryId: number, userId: number, category:{id: number, name: string}}} projets
+ */
 function filtres(categories, projets) {
     const divFiltres = document.querySelector(".liste-filtres");
     const filtreComplet = [{ name: "Tous", id: 0 }, ...categories];
@@ -56,7 +63,9 @@ function filtres(categories, projets) {
     }
 }
 
-//******PAGE INDEX UNE FOIS CONNECTER********/
+/**
+ * PAGE INDEX UNE FOIS CONNECTER
+ */
 function indexConnecter() {
     if (window.sessionStorage.getItem("user")) {
         const filtres = document.querySelector(".liste-filtres");
@@ -78,7 +87,9 @@ function indexConnecter() {
     }
 }
 
-/*********PREMIERE MODAL*********/
+/**
+ * PREMIERE MODAL
+ */
 function modal1() {
     let modal = null;
 
@@ -89,19 +100,19 @@ function modal1() {
         target.setAttribute("aria-hidden", "false");
         target.setAttribute("aria-modal", "true");
         modal = target;
-        modal.addEventListener("click", fermerModal);
-        modal.querySelector(".btn-fermer").addEventListener("click", fermerModal);
+        modal.addEventListener("click", fermerModal1);
+        modal.querySelector(".btn-fermer").addEventListener("click", fermerModal1);
         modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
     };
 
-    const fermerModal = function (e) {
+    const fermerModal1 = function (e) {
         if (modal === null) return;
         e.preventDefault();
         modal.style.display = "none";
         modal.setAttribute("aria-hidden", "true");
         modal.removeAttribute("aria-modal");
-        modal.removeEventListener("click", fermerModal);
-        modal.querySelector(".btn-fermer").removeEventListener("click", fermerModal);
+        modal.removeEventListener("click", fermerModal1);
+        modal.querySelector(".btn-fermer").removeEventListener("click", fermerModal1);
         modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
         modal = null;
     };
@@ -115,7 +126,9 @@ function modal1() {
     });
 }
 
-/*********DEUXIEME MODAL*********/
+/**
+ * DEUXIEME MODAL
+ */
 function modal2() {
     let modal = null;
 
@@ -183,7 +196,11 @@ function modal2() {
     })();
 }
 
-/************AFFICHAGE DES IMAGES DANS LA MODAL************/
+/**
+ * AFFICHAGE DES IMAGES DANS LA MODAL
+ * @param {{id: number, title: string, imageUrl: string, categoryId: number, userId: number, category:{id: number, name: string}}} projets
+ * @returns
+ */
 function afficherImageModal(projets) {
     const gallerieImageModal = document.querySelector(".galerie-image");
     gallerieImageModal.innerHTML = "";
@@ -204,7 +221,10 @@ function afficherImageModal(projets) {
     return tab;
 }
 
-/************SUPPRESSION DES TRAVAUX DANS LA MODAL**********/
+/**
+ * SUPPRESSION DES TRAVAUX DANS LA MODAL
+ * @param {{id: number, title: string, imageUrl: string, categoryId: number, userId: number, category:{id: number, name: string}}} projets
+ */
 function suppressionsTravaux(projets) {
     const icone = afficherImageModal(projets);
     for (let i = 0; i < icone.length; i++) {
@@ -213,13 +233,14 @@ function suppressionsTravaux(projets) {
             e.stopPropagation();
             const iconeElement = icone[i].id;
             let monToken = sessionStorage.getItem("user");
-            fetch(`http://localhost:5678/api/works/${iconeElement}`, {
+            const options = {
                 method: "DELETE",
                 headers: {
                     accept: "*/*",
                     Authorization: `Bearer ${monToken}`,
                 },
-            });
+            };
+            fetch(`http://localhost:5678/api/works/${iconeElement}`, options);
 
             const reponse = await fetch("http://localhost:5678/api/works");
             const projets = await reponse.json();
@@ -229,10 +250,13 @@ function suppressionsTravaux(projets) {
     }
 }
 
-/**********AFFICHAGE DE LA PHOTO SUR LA MODAL2 APRES CHOIX**********/
+/**
+ * AFFICHAGE DE LA PHOTO SUR LA MODAL2 APRES CHOIX
+ */
 function afficherImageModal2() {
     let file = document.querySelector("#filInput").files;
     let conteneurPhoto = document.querySelector("#conteneur-photo");
+    conteneurPhoto.removeAttribute("src");
     if (file.length > 0) {
         let fileReader = new FileReader();
         fileReader.onload = function (event) {
@@ -250,9 +274,22 @@ function afficherImageModal2() {
             conteneurPhoto.classList.add("ajustement-photo");
         };
         fileReader.readAsDataURL(file[0]);
+    } else {
+        const icone = document.querySelector(".conteneur-choix-photo i");
+        icone.style.display = "inherit";
+        const label = document.querySelector(".conteneur-choix-photo label");
+        label.style.display = "inherit";
+        const p = document.querySelector(".conteneur-choix-photo p");
+        p.style.display = "inherit";
+        const conteneur = document.querySelector(".conteneur-choix-photo");
+        conteneur.style.padding = "25px";
+        conteneur.style.flexDirection = "column";
+        conteneurPhoto.classList.remove("ajustement-photo");
     }
 }
-
+/**
+ * AJOUTER UN PROJET À L'API
+ */
 function ajouterProjet() {
     const form = document.querySelector("#form-ajout-projet");
     const image = document.querySelector("#filInput");
@@ -260,7 +297,7 @@ function ajouterProjet() {
     const categorie = document.querySelector("#categorie");
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        if (image.value === "" && titre.value === "") {
+        if (image.value === "" || titre.value === "") {
             const messageErreur = document.querySelector(".message-erreur-modal2");
             const hr = document.querySelector("#modal2 hr");
             messageErreur.style.display = "initial";
@@ -271,20 +308,39 @@ function ajouterProjet() {
             formData.append("title", titre.value);
             formData.append("category", categorie.value);
             let monToken = sessionStorage.getItem("user");
-            const r = await fetch("http://localhost:5678/api/works", {
+            const options = {
                 method: "POST",
                 headers: { Authorization: `Bearer ${monToken}` },
                 body: formData,
-            });
+            };
+            await fetch("http://localhost:5678/api/works", options);
+
             const reponse = await fetch("http://localhost:5678/api/works");
             const projets = await reponse.json();
             afficherImageGallerie(projets);
             suppressionsTravaux(projets);
+
+            titre.value = "";
         }
     });
 }
-
+/**
+ * VALIDATION DU BOUTON VALIDER UNE FOIS FORMULAIRE REMPLI
+ */
+function validationBtnValider() {
+    const image = document.querySelector("#filInput");
+    const titre = document.querySelector("#titre");
+    const btn = document.querySelector(".btn-valider");
+    if (titre.value != "" && image.value != "") {
+        btn.style.backgroundColor = "#1D6154";
+        btn.style.cursor = "pointer";
+    } else {
+        btn.style.backgroundColor = "#A7A7A7";
+        btn.style.cursor = "initial";
+    }
+}
 indexConnecter();
 modal1();
 modal2();
 ajouterProjet();
+validationBtnValider();

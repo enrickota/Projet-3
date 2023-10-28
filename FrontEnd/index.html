@@ -70,8 +70,12 @@
                 <aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titreModal" style="display: none">
                     <div class="modal-wrapper js-modal-stop">
                         <div class="modal-header">
-                            <button class="btn-retour"><i class="fa-solid fa-arrow-left fa-xl"></i></button>
-                            <button class="btn-fermer"><i class="fa-solid fa-xmark fa-xl"></i></button>
+                            <button class="btn-retour" onclick="document.querySelector('#filInput').value='', afficherImageModal2(), validationBtnValider()">
+                                <i class="fa-solid fa-arrow-left fa-xl"></i>
+                            </button>
+                            <button class="btn-fermer" onclick="document.querySelector('#filInput').value='', afficherImageModal2(), validationBtnValider()">
+                                <i class="fa-solid fa-xmark fa-xl"></i>
+                            </button>
                         </div>
                         <h2 id="titreModal">Ajout photo</h2>
                         <form id="form-ajout-projet" method="post" action="#">
@@ -79,11 +83,11 @@
                                 <img id="conteneur-photo" />
                                 <i class="fa-regular fa-image"></i>
                                 <label for="filInput">+ Ajouter photo</label>
-                                <input type="file" id="filInput" name="file" accept="image/*" onchange="afficherImageModal2()" />
+                                <input type="file" id="filInput" name="file" accept="image/*" onchange="afficherImageModal2(), validationBtnValider()" />
                                 <p>jpg.png : 4mo max</p>
                             </div>
                             <label for="titre">Titre</label>
-                            <input type="text" name="titre" id="titre" />
+                            <input type="text" name="titre" id="titre" onkeyup="javascript:validationBtnValider()" />
                             <label for="categorie">Catégorie</label>
                             <select name="categorie" id="categorie"></select>
                             <p class="message-erreur-modal2" style="display: none">Merci de bien remplir le formulaire</p>
