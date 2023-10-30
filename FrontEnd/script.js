@@ -87,117 +87,106 @@ function indexConnecter() {
     }
 }
 
+let modal = null;
 /**
- * PREMIERE MODAL
+ * OUVRIR LA MODAL N°1
+ * @param {string} e
  */
-function modal1() {
-    let modal = null;
-
-    const ouvrirModal = function (e) {
-        e.preventDefault();
-        const target = document.querySelector(e.target.getAttribute("href"));
-        target.style.display = null;
-        target.setAttribute("aria-hidden", "false");
-        target.setAttribute("aria-modal", "true");
-        modal = target;
-        modal.addEventListener("click", fermerModal1);
-        modal.querySelector(".btn-fermer").addEventListener("click", fermerModal1);
-        modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
-    };
-
-    const fermerModal1 = function (e) {
-        if (modal === null) return;
-        e.preventDefault();
-        modal.style.display = "none";
-        modal.setAttribute("aria-hidden", "true");
-        modal.removeAttribute("aria-modal");
-        modal.removeEventListener("click", fermerModal1);
-        modal.querySelector(".btn-fermer").removeEventListener("click", fermerModal1);
-        modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
-        modal = null;
-    };
-
-    const stopPropagation = function (e) {
-        e.stopPropagation();
-    };
-
-    document.querySelectorAll(".btn-modifier").forEach((a) => {
-        a.addEventListener("click", ouvrirModal);
-    });
+function ouvrirModal1(e) {
+    e.preventDefault();
+    const target = document.querySelector("#modal1");
+    target.style.display = null;
+    target.setAttribute("aria-hidden", "false");
+    target.setAttribute("aria-modal", "true");
+    modal = target;
+    modal.addEventListener("click", fermerModal1);
+    modal.querySelector(".btn-fermer").addEventListener("click", fermerModal1);
+    modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
 }
 
 /**
- * DEUXIEME MODAL
+ * FERMER LA MODAL N°1
+ * @param {string} e
+ * @returns
  */
-function modal2() {
-    let modal = null;
+function fermerModal1(e) {
+    if (modal === null) return;
+    e.preventDefault();
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", "true");
+    modal.removeAttribute("aria-modal");
+    modal.removeEventListener("click", fermerModal1);
+    modal.querySelector(".btn-fermer").removeEventListener("click", fermerModal1);
+    modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
+    modal = null;
+}
 
-    const ouvrirModal = function (e) {
-        e.preventDefault();
-        const target = document.querySelector("#modal2");
-        target.style.display = null;
-        target.setAttribute("aria-hidden", "false");
-        target.setAttribute("aria-modal", "true");
-        modal = target;
-        modal.addEventListener("click", fermerModal);
-        modal.querySelector(".btn-fermer").addEventListener("click", fermerModal);
-        modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
-    };
+const stopPropagation = function (e) {
+    e.stopPropagation();
+};
 
-    const fermerModal = function (e) {
-        if (modal === null) return;
-        e.preventDefault();
-        const modal1 = document.querySelector("#modal1");
-        modal1.style.display = "none";
-        modal1.setAttribute("aria-hidden", "true");
-        modal1.removeAttribute("aria-modal");
-        modal1.removeEventListener("click", fermerModal);
-        modal1.querySelector(".btn-fermer").removeEventListener("click", fermerModal);
-        modal1.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
-        modal.style.display = "none";
-        modal.setAttribute("aria-hidden", "true");
-        modal.removeAttribute("aria-modal");
-        modal.removeEventListener("click", fermerModal);
-        modal.querySelector(".btn-fermer").removeEventListener("click", fermerModal);
-        modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
-        modal = null;
-    };
+document.querySelectorAll(".btn-modifier").forEach((a) => {
+    a.addEventListener("click", ouvrirModal1);
+});
 
-    const btnRetour = document.querySelector(".btn-retour");
-    btnRetour.addEventListener("click", () => {
-        const modal2 = document.querySelector("#modal2");
-        modal2.style.display = "none";
-        modal2.setAttribute("aria-hidden", "true");
-        modal2.removeAttribute("aria-modal");
-        modal2.removeEventListener("click", fermerModal);
-        modal2.querySelector(".btn-fermer").removeEventListener("click", fermerModal);
-        modal2.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
-    });
-
-    const stopPropagation = function (e) {
-        e.stopPropagation();
-    };
-
-    document.querySelectorAll(".btn-ajouter").forEach((a) => {
-        a.addEventListener("click", ouvrirModal);
-    });
-
-    (async function () {
-        const reponseCategorie = await fetch("http://localhost:5678/api/categories");
-        const categories = await reponseCategorie.json();
-        const selectCategorie = document.querySelector("#categorie");
-        for (let i = 0; i < categories.length; i++) {
-            const option = document.createElement("option");
-            option.setAttribute("value", categories[i].id);
-            option.innerText = categories[i].name;
-            selectCategorie.appendChild(option);
-        }
-        ("");
-    })();
+/**
+ * OUVRIR LA MODAL N°2
+ * @param {string} e
+ */
+function ouvrirModal2(e) {
+    fermerModal1(e);
+    const target = document.querySelector("#modal2");
+    target.style.display = null;
+    target.setAttribute("aria-hidden", "false");
+    target.setAttribute("aria-modal", "true");
+    modal = target;
+    modal.addEventListener("click", fermerModal2);
+    modal.querySelector(".btn-fermer").addEventListener("click", fermerModal2);
+    modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
 }
 
 /**
- * AFFICHAGE DES IMAGES DANS LA MODAL
+ * FERMER LA MODAL N°2
+ * @param {string} e
+ * @returns
+ */
+function fermerModal2(e) {
+    if (modal === null) return;
+    e.preventDefault();
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", "true");
+    modal.removeAttribute("aria-modal");
+    modal.removeEventListener("click", fermerModal2);
+    modal.querySelector(".btn-fermer").removeEventListener("click", fermerModal2);
+    modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
+    modal = null;
+}
+
+const btnRetour = document.querySelector(".btn-retour");
+btnRetour.addEventListener("click", (e) => {
+    fermerModal2(e);
+    ouvrirModal1(e);
+});
+
+document.querySelectorAll(".btn-ajouter").forEach((a) => {
+    a.addEventListener("click", ouvrirModal2);
+});
+
+(async function () {
+    const reponseCategorie = await fetch("http://localhost:5678/api/categories");
+    const categories = await reponseCategorie.json();
+    const selectCategorie = document.querySelector("#categorie");
+    for (let i = 0; i < categories.length; i++) {
+        const option = document.createElement("option");
+        option.setAttribute("value", categories[i].id);
+        option.innerText = categories[i].name;
+        selectCategorie.appendChild(option);
+    }
+    ("");
+})();
+
+/**
+ * AFFICHAGE DES IMAGES DANS LA MODAL N°1
  * @param {{id: number, title: string, imageUrl: string, categoryId: number, userId: number, category:{id: number, name: string}}} projets
  * @returns
  */
@@ -222,7 +211,7 @@ function afficherImageModal(projets) {
 }
 
 /**
- * SUPPRESSION DES TRAVAUX DANS LA MODAL
+ * SUPPRESSION DES TRAVAUX DANS LA MODAL N°1
  * @param {{id: number, title: string, imageUrl: string, categoryId: number, userId: number, category:{id: number, name: string}}} projets
  */
 function suppressionsTravaux(projets) {
@@ -251,42 +240,30 @@ function suppressionsTravaux(projets) {
 }
 
 /**
- * AFFICHAGE DE LA PHOTO SUR LA MODAL2 APRES CHOIX
+ * AFFICHAGE DE LA PHOTO SUR LA MODAL N°2 APRES CHOIX
  */
 function afficherImageModal2() {
     let file = document.querySelector("#filInput").files;
     let conteneurPhoto = document.querySelector("#conteneur-photo");
     conteneurPhoto.removeAttribute("src");
-    if (file.length > 0) {
-        let fileReader = new FileReader();
-        fileReader.onload = function (event) {
-            const icone = document.querySelector(".conteneur-choix-photo i");
-            icone.style.display = "none";
-            const label = document.querySelector(".conteneur-choix-photo label");
-            label.style.display = "none";
-            const p = document.querySelector(".conteneur-choix-photo p");
-            p.style.display = "none";
-            const conteneur = document.querySelector(".conteneur-choix-photo");
-            conteneur.style.padding = "0px";
-            conteneur.style.display = "flex";
-            conteneur.style.justifyContent = "center";
-            conteneurPhoto.setAttribute("src", event.target.result);
-            conteneurPhoto.classList.add("ajustement-photo");
-        };
-        fileReader.readAsDataURL(file[0]);
-    } else {
+    let fileReader = new FileReader();
+    fileReader.onload = function (event) {
         const icone = document.querySelector(".conteneur-choix-photo i");
-        icone.style.display = "inherit";
+        icone.style.display = "none";
         const label = document.querySelector(".conteneur-choix-photo label");
-        label.style.display = "inherit";
+        label.style.display = "none";
         const p = document.querySelector(".conteneur-choix-photo p");
-        p.style.display = "inherit";
+        p.style.display = "none";
         const conteneur = document.querySelector(".conteneur-choix-photo");
-        conteneur.style.padding = "25px";
-        conteneur.style.flexDirection = "column";
-        conteneurPhoto.classList.remove("ajustement-photo");
-    }
+        conteneur.style.padding = "0px";
+        conteneur.style.display = "flex";
+        conteneur.style.justifyContent = "center";
+        conteneurPhoto.setAttribute("src", event.target.result);
+        conteneurPhoto.classList.add("ajustement-photo");
+    };
+    fileReader.readAsDataURL(file[0]);
 }
+
 /**
  * AJOUTER UN PROJET À L'API
  */
@@ -319,7 +296,6 @@ function ajouterProjet() {
             const projets = await reponse.json();
             afficherImageGallerie(projets);
             suppressionsTravaux(projets);
-
             titre.value = "";
         }
     });
@@ -340,7 +316,5 @@ function validationBtnValider() {
     }
 }
 indexConnecter();
-modal1();
-modal2();
 ajouterProjet();
 validationBtnValider();
