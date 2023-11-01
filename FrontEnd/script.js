@@ -168,9 +168,8 @@ btnRetour.addEventListener("click", (e) => {
     ouvrirModal1(e);
 });
 
-document.querySelectorAll(".btn-ajouter").forEach((a) => {
-    a.addEventListener("click", ouvrirModal2);
-});
+const btnAjouter = document.querySelector(".btn-ajouter");
+btnAjouter.addEventListener("click", ouvrirModal2);
 
 (async function () {
     const reponseCategorie = await fetch("http://localhost:5678/api/categories");
